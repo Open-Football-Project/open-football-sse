@@ -7,6 +7,10 @@ export const sseService = (eventsEndpoint: string) => {
 
     const clients: SSEClient[] = [];
 
+    const flushResponse = (res: FlushableResponse): void => {
+        res.flush?.();
+    };
+
     const addNewClient = (req: Request, res: Response) => {
         const clientId = randomUUID();
         clients.push({ id: clientId, res });
@@ -31,7 +35,7 @@ export const sseService = (eventsEndpoint: string) => {
         clients.forEach((c: SSEClient) => {
             try {
                 c.res.write(`data: ${JSON.stringify(data)}\n\n`);
-               (c.res as FlushableResponse).flush?.()
+                flushResponse(c.res as FlushableResponse);
             } catch (err) {
                 console.error("Failed to write to client:", c.id, err);
                 failedIds.push(c.id);

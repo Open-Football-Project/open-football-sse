@@ -1,11 +1,15 @@
 import axios from "axios";
 import { randomUUID } from "crypto";
 import { Request, Response } from "express";
-import { SSEClient } from "../types/types";
+import { SSEClient, FlushableResponse } from "../types/types";
 
 export const sseService = (eventsEndpoint: string) => {
 
     const clients: SSEClient[] = [];
+
+    const flushResponse = (res: FlushableResponse): void => {
+        res.flush?.();
+    };
 
     const addNewClient = (req: Request, res: Response) => {
         const clientId = randomUUID();
@@ -31,7 +35,7 @@ export const sseService = (eventsEndpoint: string) => {
         clients.forEach((c: SSEClient) => {
             try {
                 c.res.write(`data: ${JSON.stringify(data)}\n\n`);
-                (c.res as any).flush?.();
+                flushResponse(c.res as FlushableResponse);
             } catch (err) {
                 console.error("Failed to write to client:", c.id, err);
                 failedIds.push(c.id);

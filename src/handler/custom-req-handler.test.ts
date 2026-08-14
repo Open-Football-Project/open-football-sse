@@ -21,7 +21,7 @@ function makeMockRes(headersSent: boolean): MockResponse {
 
 const mockReq = {} as Request;
 
-describe("SSEHandler", () => {
+describe("customReqHandler tests", () => {
     it("sets SSE headers, registers the client, and triggers a refresh on success", () => {
         const addNewClient = jest.fn<(req: Request, res: Response) => void>();
         const refresh = jest.fn();

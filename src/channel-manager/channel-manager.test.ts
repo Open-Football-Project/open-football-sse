@@ -14,7 +14,7 @@ function makeMockApp(): Express {
     return { get: jest.fn() } as unknown as Express;
 }
 
-describe("registerChannel", () => {
+describe("registerChannel tests", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.spyOn(global, "setInterval").mockImplementation(() => 0 as unknown as NodeJS.Timeout);

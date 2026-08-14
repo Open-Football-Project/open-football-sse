@@ -1,5 +1,6 @@
 import axios from "axios";
 import { sseService } from "./SEEService";
+import { describe, it, expect, jest } from "@jest/globals";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -26,7 +27,7 @@ describe("sseService", () => {
 
     describe("addNewClient", () => {
         it("registers a client and logs connection", () => {
-            const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+            const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
             const { addNewClient, broadcast } = sseService(endpoint);
             const req = makeMockReq();
             const res = makeMockRes();
@@ -64,7 +65,7 @@ describe("sseService", () => {
 
     describe("removeClient", () => {
         it("removes an existing client by id", () => {
-            const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+            const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
             const { addNewClient, removeClient, broadcast } = sseService(endpoint);
             const req = makeMockReq();
             const res = makeMockRes();
@@ -86,11 +87,9 @@ describe("sseService", () => {
             const req = makeMockReq();
             const res = makeMockRes();
 
-            // Add a real client
             const service = sseService(endpoint);
             service.addNewClient(req as any, res as any);
 
-            // Remove a non-existent id — should not throw
             expect(() => removeClient("non-existent-uuid")).not.toThrow();
         });
     });
@@ -116,7 +115,7 @@ describe("sseService", () => {
         });
 
         it("removes and skips clients that throw on write", () => {
-            const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+            const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
             const { addNewClient, broadcast } = sseService(endpoint);
 
             const req1 = makeMockReq();

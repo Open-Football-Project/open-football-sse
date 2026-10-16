@@ -1,5 +1,5 @@
 import axios from "axios";
-import { sseService } from "./SEEService";
+import { sseService } from "./SSEService";
 import { describe, it, expect, jest } from "@jest/globals";
 
 jest.mock("axios");

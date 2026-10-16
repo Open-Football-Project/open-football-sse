@@ -1,10 +1,10 @@
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
 import { Express } from "express";
 import { registerChannel } from "./channel-manager";
-import { sseService } from "../service/SEEService";
+import { sseService } from "../service/SSEService";
 import { customReqHandler } from "../handler/custom-req-handler";
 
-jest.mock("../service/SEEService");
+jest.mock("../service/SSEService");
 jest.mock("../handler/custom-req-handler");
 
 const mockedSseService = sseService as jest.MockedFunction<typeof sseService>;

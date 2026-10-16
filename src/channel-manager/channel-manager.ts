@@ -1,6 +1,6 @@
 import { Express } from "express";
 import { customReqHandler } from "../handler/custom-req-handler";
-import { sseService } from "../service/SEEService";
+import { sseService } from "../service/SSEService";
 
 export function registerChannel(app: Express, path: string, endpoint: string, refreshMs: number) {
   const { addNewClient, broadcast, fetchEvents } = sseService(endpoint);
